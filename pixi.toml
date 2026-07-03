@@ -1,0 +1,15 @@
+[workspace]
+channels = ["conda-forge"]
+platforms = ["win-64"]
+
+[dependencies]
+clangxx = "*"
+cmake = "*"
+llvm-tools = "*"
+ninja = "*"
+
+[tasks]
+clean = "cmake -E rm -rf build/pixi"
+configure = { cmd = "cmake -S . -B build/pixi -G Ninja -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_RC_COMPILER=llvm-rc -DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY", depends-on = ["clean"] }
+build = "cmake --build build/pixi"
+check = { depends-on = ["configure", "build"] }
