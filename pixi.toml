@@ -1,0 +1,15 @@
+[workspace]
+name = "ds"
+channels = ["conda-forge"]
+platforms = ["win-64"]
+
+[dependencies]
+cmake = "*"
+gxx = "*"
+ninja = "*"
+
+[tasks]
+clean = "cmake -E rm -rf build/pixi"
+configure = { cmd = "cmake -S . -B build/pixi -G Ninja -DCMAKE_CXX_COMPILER=g++", depends-on = ["clean"] }
+build = { cmd = "cmake --build build/pixi", depends-on = ["configure"] }
+check = { depends-on = ["build"] }
